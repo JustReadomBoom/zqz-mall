@@ -48,7 +48,7 @@ public class R<T> implements Serializable {
         return r;
     }
 
-    public static R success(Object data){
+    public static R successData(Object data){
         R r = new R<>();
         r.setResultCode(SUCCESS);
         r.setMessage(SUCCESS_MESSAGE);

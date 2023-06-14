@@ -13,5 +13,7 @@ public interface MallUserMapper {
 
     int updateByPrimaryKeySelective(MallUser record);
 
-    int updateByPrimaryKey(MallUser record);
+    MallUser selectByNameAndPwd(String name, String pwd);
+
+    MallUser selectByName(String name);
 }

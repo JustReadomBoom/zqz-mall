@@ -52,6 +52,9 @@ public class UserMethodHandler implements HandlerMethodArgumentResolver {
             String token = nativeWebRequest.getHeader(TOKEN);
             if (StrUtil.isNotBlank(token) && token.length() == TOKEN_LENGTH) {
                 MallUserToken userToken = userTokenMapper.selectByToken(token);
+                if (ObjectUtil.isEmpty(userToken)) {
+                    MallException.fail(ResultEnum.TOKEN_EXPIRE_ERROR.getResult());
+                }
                 if (ObjectUtil.isNotEmpty(userToken) && userToken.getExpireTime().getTime() <= System.currentTimeMillis()) {
                     //过期
                     MallException.fail(ResultEnum.TOKEN_EXPIRE_ERROR.getResult());

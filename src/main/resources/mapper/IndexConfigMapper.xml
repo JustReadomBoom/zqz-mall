@@ -15,11 +15,11 @@
     <result column="update_user" property="updateUser" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, config_name, config_type, goods_id, redirect_url, config_rank, is_deleted, create_time, 
+    id, config_name, config_type, goods_id, redirect_url, config_rank, is_deleted, create_time,
     create_user, update_time, update_user
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select 
+    select
     <include refid="Base_Column_List" />
     from index_config
     where id = #{id,jdbcType=BIGINT}
@@ -29,13 +29,13 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.zqz.mall.entity.IndexConfig" >
-    insert into index_config (id, config_name, config_type, 
-      goods_id, redirect_url, config_rank, 
-      is_deleted, create_time, create_user, 
+    insert into index_config (id, config_name, config_type,
+      goods_id, redirect_url, config_rank,
+      is_deleted, create_time, create_user,
       update_time, update_user)
-    values (#{id,jdbcType=BIGINT}, #{configName,jdbcType=VARCHAR}, #{configType,jdbcType=TINYINT}, 
-      #{goodsId,jdbcType=BIGINT}, #{redirectUrl,jdbcType=VARCHAR}, #{configRank,jdbcType=INTEGER}, 
-      #{isDeleted,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, #{createUser,jdbcType=INTEGER}, 
+    values (#{id,jdbcType=BIGINT}, #{configName,jdbcType=VARCHAR}, #{configType,jdbcType=TINYINT},
+      #{goodsId,jdbcType=BIGINT}, #{redirectUrl,jdbcType=VARCHAR}, #{configRank,jdbcType=INTEGER},
+      #{isDeleted,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, #{createUser,jdbcType=INTEGER},
       #{updateTime,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.zqz.mall.entity.IndexConfig" >
@@ -147,18 +147,13 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.zqz.mall.entity.IndexConfig" >
-    update index_config
-    set config_name = #{configName,jdbcType=VARCHAR},
-      config_type = #{configType,jdbcType=TINYINT},
-      goods_id = #{goodsId,jdbcType=BIGINT},
-      redirect_url = #{redirectUrl,jdbcType=VARCHAR},
-      config_rank = #{configRank,jdbcType=INTEGER},
-      is_deleted = #{isDeleted,jdbcType=TINYINT},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      create_user = #{createUser,jdbcType=INTEGER},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
-      update_user = #{updateUser,jdbcType=INTEGER}
-    where id = #{id,jdbcType=BIGINT}
-  </update>
+
+  <select id="selectByTypeAndNum" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from index_config
+    where config_type = #{type} and is_deleted = 0
+    order by config_rank desc
+    limit #{num}
+  </select>
 </mapper>

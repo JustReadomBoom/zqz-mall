@@ -55,6 +55,8 @@ public enum ResultEnum {
 
     LOGIN_ERROR("登录失败！"),
 
+    REGISTER_ERROR("注册失败！"),
+
     NOT_LOGIN_ERROR("未登录！"),
 
     ADMIN_NOT_LOGIN_ERROR("管理员未登录！"),

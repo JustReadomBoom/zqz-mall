@@ -57,7 +57,28 @@
       </if>
     </trim>
   </insert>
-
+  <update id="updateByPrimaryKeySelective" parameterType="com.zqz.mall.entity.MallUserToken" >
+    update mall_user_token
+    <set >
+      <if test="token != null" >
+        token = #{token,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expireTime != null" >
+        expire_time = #{expireTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zqz.mall.entity.MallUserToken" >
+    update mall_user_token
+    set token = #{token,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      expire_time = #{expireTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
 
   <select id="selectByToken" parameterType="java.lang.String" resultMap="BaseResultMap">
     select

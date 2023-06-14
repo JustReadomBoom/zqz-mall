@@ -2,6 +2,8 @@ package com.zqz.mall.dao;
 
 import com.zqz.mall.entity.IndexConfig;
 
+import java.util.List;
+
 public interface IndexConfigMapper {
     int deleteByPrimaryKey(Long id);
 
@@ -13,5 +15,6 @@ public interface IndexConfigMapper {
 
     int updateByPrimaryKeySelective(IndexConfig record);
 
-    int updateByPrimaryKey(IndexConfig record);
+
+    List<IndexConfig> selectByTypeAndNum(Integer type, Integer num);
 }

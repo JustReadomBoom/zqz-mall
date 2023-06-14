@@ -12,11 +12,11 @@
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, nick_name, login_name, password_md5, introduce_sign, is_deleted, locked_flag, 
+    id, nick_name, login_name, password_md5, introduce_sign, is_deleted, locked_flag,
     create_time
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select 
+    select
     <include refid="Base_Column_List" />
     from mall_user
     where id = #{id,jdbcType=BIGINT}
@@ -26,11 +26,11 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.zqz.mall.entity.MallUser" >
-    insert into mall_user (id, nick_name, login_name, 
-      password_md5, introduce_sign, is_deleted, 
+    insert into mall_user (id, nick_name, login_name,
+      password_md5, introduce_sign, is_deleted,
       locked_flag, create_time)
-    values (#{id,jdbcType=BIGINT}, #{nickName,jdbcType=VARCHAR}, #{loginName,jdbcType=VARCHAR}, 
-      #{passwordMd5,jdbcType=VARCHAR}, #{introduceSign,jdbcType=VARCHAR}, #{isDeleted,jdbcType=TINYINT}, 
+    values (#{id,jdbcType=BIGINT}, #{nickName,jdbcType=VARCHAR}, #{loginName,jdbcType=VARCHAR},
+      #{passwordMd5,jdbcType=VARCHAR}, #{introduceSign,jdbcType=VARCHAR}, #{isDeleted,jdbcType=TINYINT},
       #{lockedFlag,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.zqz.mall.entity.MallUser" >
@@ -115,15 +115,20 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.zqz.mall.entity.MallUser" >
-    update mall_user
-    set nick_name = #{nickName,jdbcType=VARCHAR},
-      login_name = #{loginName,jdbcType=VARCHAR},
-      password_md5 = #{passwordMd5,jdbcType=VARCHAR},
-      introduce_sign = #{introduceSign,jdbcType=VARCHAR},
-      is_deleted = #{isDeleted,jdbcType=TINYINT},
-      locked_flag = #{lockedFlag,jdbcType=TINYINT},
-      create_time = #{createTime,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=BIGINT}
-  </update>
+
+  <select id="selectByNameAndPwd" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from mall_user
+    where login_name = #{name} and password_md5 = #{pwd} and is_deleted = 0
+  </select>
+
+
+  <select id="selectByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from mall_user
+    where login_name = #{name} and is_deleted = 0
+  </select>
+
 </mapper>

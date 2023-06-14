@@ -11,5 +11,9 @@ public interface MallUserTokenMapper {
 
     MallUserToken selectByPrimaryKey(Long id);
 
+    int updateByPrimaryKeySelective(MallUserToken record);
+
+    int updateByPrimaryKey(MallUserToken record);
+
     MallUserToken selectByToken(String token);
 }
