@@ -95,6 +95,8 @@ public enum ResultEnum {
 
     NO_PERMISSION_ERROR("无权限！"),
 
+    DATA_PARSE_FAIL("数据解析失败"),
+
     DB_ERROR("database error");
 
     private String result;

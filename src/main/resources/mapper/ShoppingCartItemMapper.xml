@@ -14,7 +14,7 @@
     id, user_id, goods_id, goods_count, is_deleted, create_time, update_time
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select 
+    select
     <include refid="Base_Column_List" />
     from shopping_cart_item
     where id = #{id,jdbcType=BIGINT}
@@ -24,11 +24,11 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.zqz.mall.entity.ShoppingCartItem" >
-    insert into shopping_cart_item (id, user_id, goods_id, 
-      goods_count, is_deleted, create_time, 
+    insert into shopping_cart_item (id, user_id, goods_id,
+      goods_count, is_deleted, create_time,
       update_time)
-    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{goodsId,jdbcType=BIGINT}, 
-      #{goodsCount,jdbcType=INTEGER}, #{isDeleted,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, 
+    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{goodsId,jdbcType=BIGINT},
+      #{goodsCount,jdbcType=INTEGER}, #{isDeleted,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP},
       #{updateTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.zqz.mall.entity.ShoppingCartItem" >
@@ -114,4 +114,49 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+  <select id="selectByUserId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from shopping_cart_item
+    where user_id = #{userId,jdbcType=BIGINT} and is_deleted = 0
+    limit #{num}
+  </select>
+
+
+  <select id="selectByUserIdPage" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from shopping_cart_item
+    where user_id = #{userId,jdbcType=BIGINT} and is_deleted = 0
+  </select>
+
+  <select id="selectByUserIdAndGoodsId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from shopping_cart_item
+    where user_id = #{userId,jdbcType=BIGINT} and goods_id=#{goodsId,jdbcType=BIGINT} and is_deleted = 0
+    limit 1
+  </select>
+
+  <select id="selectCountByUserId" resultType="int">
+    select
+    count(*)
+    from shopping_cart_item
+    where user_id = #{userId,jdbcType=BIGINT} and is_deleted = 0
+  </select>
+
+  <select id="selectByUserIdAndCartItemIds" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from shopping_cart_item
+    where
+    id in
+    <foreach item="id" collection="itemIds" open="(" separator="," close=")">
+      #{id}
+    </foreach>
+    and user_id = #{userId,jdbcType=BIGINT} and is_deleted = 0
+  </select>
+
+
 </mapper>

@@ -14,4 +14,6 @@ public interface MallUserAddressMapper {
     int updateByPrimaryKeySelective(MallUserAddress record);
 
     int updateByPrimaryKey(MallUserAddress record);
+
+    MallUserAddress getMyDefaultAddress(Long userId);
 }

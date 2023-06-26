@@ -42,7 +42,7 @@ public class IndexInfoController {
      */
     @GetMapping("/getIndexInfo")
     public R getIndexInfo(@UserToken MallUser mallUser) {
-        log.info("用户:{}", JSONUtil.toJsonStr(mallUser));
+        log.info("getIndexInfo-->用户:{}", JSONUtil.toJsonStr(mallUser));
         IndexInfo indexInfo = new IndexInfo();
         List<IndexCarouselVo> carouselVos = carouselService.selectIndexByLimit(5);
         List<IndexGoodsConfigVo> hotGoods = indexConfigService.selectByTypeAndLimit(3, 4);

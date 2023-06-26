@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class GoodsInfo implements Serializable {
+
+
     private Long id;
 
     private String goodsName;

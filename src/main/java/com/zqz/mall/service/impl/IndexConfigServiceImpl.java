@@ -36,17 +36,22 @@ public class IndexConfigServiceImpl implements IndexConfigService {
         if (CollectionUtil.isNotEmpty(configList)) {
             List<Long> goodIds = configList.stream().map(IndexConfig::getGoodsId).collect(Collectors.toList());
             List<GoodsInfo> goodsInfoList = goodsInfoMapper.selectByGoodIds(goodIds);
-            goodsConfigVos = BeanUtil.copyToList(goodsInfoList, IndexGoodsConfigVo.class);
-            for (IndexGoodsConfigVo vo : goodsConfigVos) {
-                String goodsName = vo.getGoodsName();
-                String goodsIntro = vo.getGoodsIntro();
-                if (goodsName.length() > 30) {
-                    goodsName = goodsName.substring(0, 30) + "...";
-                    vo.setGoodsName(goodsName);
-                }
-                if (goodsIntro.length() > 22) {
-                    goodsIntro = goodsIntro.substring(0, 22) + "...";
-                    vo.setGoodsIntro(goodsIntro);
+            if(CollectionUtil.isNotEmpty(goodsInfoList)){
+                for (GoodsInfo goodsInfo : goodsInfoList) {
+                    IndexGoodsConfigVo configVo = new IndexGoodsConfigVo();
+                    BeanUtil.copyProperties(goodsInfo, configVo);
+                    configVo.setGoodsId(goodsInfo.getId());
+                    String goodsName = goodsInfo.getGoodsName();
+                    String goodsIntro = goodsInfo.getGoodsIntro();
+                    if (goodsName.length() > 30) {
+                        goodsName = goodsName.substring(0, 30) + "...";
+                        configVo.setGoodsName(goodsName);
+                    }
+                    if (goodsIntro.length() > 22) {
+                        goodsIntro = goodsIntro.substring(0, 22) + "...";
+                        configVo.setGoodsIntro(goodsIntro);
+                    }
+                    goodsConfigVos.add(configVo);
                 }
             }
         }

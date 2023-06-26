@@ -16,11 +16,11 @@
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, user_id, user_name, user_phone, default_flag, province_name, city_name, region_name, 
+    id, user_id, user_name, user_phone, default_flag, province_name, city_name, region_name,
     detail_address, is_deleted, create_time, update_time
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select 
+    select
     <include refid="Base_Column_List" />
     from mall_user_address
     where id = #{id,jdbcType=BIGINT}
@@ -30,14 +30,14 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.zqz.mall.entity.MallUserAddress" >
-    insert into mall_user_address (id, user_id, user_name, 
-      user_phone, default_flag, province_name, 
-      city_name, region_name, detail_address, 
+    insert into mall_user_address (id, user_id, user_name,
+      user_phone, default_flag, province_name,
+      city_name, region_name, detail_address,
       is_deleted, create_time, update_time
       )
-    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR}, 
-      #{userPhone,jdbcType=VARCHAR}, #{defaultFlag,jdbcType=TINYINT}, #{provinceName,jdbcType=VARCHAR}, 
-      #{cityName,jdbcType=VARCHAR}, #{regionName,jdbcType=VARCHAR}, #{detailAddress,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR},
+      #{userPhone,jdbcType=VARCHAR}, #{defaultFlag,jdbcType=TINYINT}, #{provinceName,jdbcType=VARCHAR},
+      #{cityName,jdbcType=VARCHAR}, #{regionName,jdbcType=VARCHAR}, #{detailAddress,jdbcType=VARCHAR},
       #{isDeleted,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
       )
   </insert>
@@ -174,4 +174,11 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+  <select id="getMyDefaultAddress" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from mall_user_address
+    where user_id = #{userId} and default_flag =1 and is_deleted = 0 limit 1
+  </select>
 </mapper>
