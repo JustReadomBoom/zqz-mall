@@ -181,4 +181,13 @@
     from mall_user_address
     where user_id = #{userId} and default_flag =1 and is_deleted = 0 limit 1
   </select>
+
+  <select id="selectAddressList" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from mall_user_address
+    where user_id = #{userId} and is_deleted = 0
+    order by id desc
+    limit 20 <!-- 最多返回20条 -->
+  </select>
 </mapper>

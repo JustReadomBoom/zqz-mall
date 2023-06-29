@@ -1,11 +1,10 @@
 package com.zqz.mall.service.impl;
 
-import cn.hutool.core.util.NumberUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.RandomUtil;
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.digest.DigestUtil;
-import cn.hutool.crypto.digest.MD5;
-import cn.hutool.system.SystemUtil;
+import com.zqz.mall.common.bean.UpdateUserInfoReq;
 import com.zqz.mall.dao.MallUserMapper;
 import com.zqz.mall.dao.MallUserTokenMapper;
 import com.zqz.mall.entity.MallUser;
@@ -94,6 +93,25 @@ public class MallUserServiceImpl implements MallUserService {
     private String getNewToken(String timeStr, Long userId) {
         String src = timeStr + userId + RandomUtil.randomNumbers(4);
         return CommonUtil.genToken(src);
+    }
+
+
+    @Override
+    public boolean updateInfo(UpdateUserInfoReq req, Long userId) {
+        MallUser user = mallUserMapper.selectByPrimaryKey(userId);
+        if (ObjectUtil.isEmpty(user)) {
+            throw new MallException(ResultEnum.DATA_NOT_EXIST.getResult());
+        }
+        user.setNickName(req.getNickName());
+        if (StrUtil.isNotBlank(req.getPasswordMd5())) {
+            user.setPasswordMd5(req.getPasswordMd5());
+        }
+        user.setIntroduceSign(req.getIntroduceSign());
+        int u = mallUserMapper.updateByPrimaryKeySelective(user);
+        if (u > 0) {
+            return true;
+        }
+        return false;
     }
 
 }

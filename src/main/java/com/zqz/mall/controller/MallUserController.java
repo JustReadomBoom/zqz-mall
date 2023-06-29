@@ -1,16 +1,14 @@
 package com.zqz.mall.controller;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
-import com.zqz.mall.common.bean.MallUserLoginReq;
-import com.zqz.mall.common.bean.MallUserRegisterReq;
-import com.zqz.mall.common.bean.R;
+import com.zqz.mall.annotation.UserToken;
+import com.zqz.mall.common.bean.*;
+import com.zqz.mall.entity.MallUser;
 import com.zqz.mall.enums.ResultEnum;
 import com.zqz.mall.service.MallUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -44,5 +42,23 @@ public class MallUserController {
             return R.success();
         }
         return R.fail(ResultEnum.REGISTER_ERROR.getResult());
+    }
+
+
+    @GetMapping("/getInfo")
+    public R getInfo(@UserToken MallUser mallUser) {
+        GetUserInfoVo user = new GetUserInfoVo();
+        BeanUtil.copyProperties(mallUser, user);
+        return R.successData(mallUser);
+    }
+
+
+    @PostMapping("/updateInfo")
+    public R updateInfo(@RequestBody UpdateUserInfoReq req, @UserToken MallUser mallUser) {
+        boolean up = mallUserService.updateInfo(req, mallUser.getId());
+        if (up) {
+            return R.success();
+        }
+        return R.fail(ResultEnum.OPERATE_ERROR.getResult());
     }
 }

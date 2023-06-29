@@ -2,6 +2,8 @@ package com.zqz.mall.dao;
 
 import com.zqz.mall.entity.MallUserAddress;
 
+import java.util.List;
+
 public interface MallUserAddressMapper {
     int deleteByPrimaryKey(Long id);
 
@@ -16,4 +18,7 @@ public interface MallUserAddressMapper {
     int updateByPrimaryKey(MallUserAddress record);
 
     MallUserAddress getMyDefaultAddress(Long userId);
+
+    List<MallUserAddress> selectAddressList(Long userId);
+
 }
