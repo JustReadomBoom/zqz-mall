@@ -1,7 +1,6 @@
 package com.zqz.mall.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.core.collection.CollStreamUtil;
 import cn.hutool.core.collection.CollectionUtil;
 import com.zqz.mall.common.bean.GetCategoryDataResp;
 import com.zqz.mall.common.bean.GetCategoryDataVo;

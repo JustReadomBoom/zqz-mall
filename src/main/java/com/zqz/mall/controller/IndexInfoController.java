@@ -1,6 +1,5 @@
 package com.zqz.mall.controller;
 
-import cn.hutool.json.JSONUtil;
 import com.zqz.mall.annotation.UserToken;
 import com.zqz.mall.common.bean.IndexCarouselVo;
 import com.zqz.mall.common.bean.IndexGoodsConfigVo;
@@ -42,7 +41,6 @@ public class IndexInfoController {
      */
     @GetMapping("/getIndexInfo")
     public R getIndexInfo(@UserToken MallUser mallUser) {
-        log.info("getIndexInfo-->用户:{}", JSONUtil.toJsonStr(mallUser));
         IndexInfo indexInfo = new IndexInfo();
         List<IndexCarouselVo> carouselVos = carouselService.selectIndexByLimit(5);
         List<IndexGoodsConfigVo> hotGoods = indexConfigService.selectByTypeAndLimit(3, 4);
@@ -53,7 +51,6 @@ public class IndexInfoController {
         indexInfo.setNewGoods(newGoods);
         indexInfo.setRecommendGoods(recommendGoods);
         return R.successData(indexInfo);
-
     }
 
 

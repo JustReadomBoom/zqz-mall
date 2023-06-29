@@ -1,6 +1,5 @@
 package com.zqz.mall.controller;
 
-import cn.hutool.json.JSONUtil;
 import com.zqz.mall.annotation.UserToken;
 import com.zqz.mall.common.bean.AddShoppingCartReq;
 import com.zqz.mall.common.bean.PageResult;
@@ -36,7 +35,6 @@ public class ShoppingCartController {
      */
     @GetMapping("/list")
     public R getList(@UserToken MallUser mallUser) {
-        log.info("getList-->用户:{}", JSONUtil.toJsonStr(mallUser));
         return R.successData(shoppingCartService.getList(mallUser.getId()));
     }
 
@@ -63,7 +61,6 @@ public class ShoppingCartController {
      */
     @PostMapping("/addGoods")
     public R addGoods(@RequestBody AddShoppingCartReq req, @UserToken MallUser mallUser) {
-        log.info("addGoods-->用户:{}", JSONUtil.toJsonStr(mallUser));
         shoppingCartService.addGoods(req, mallUser.getId());
         return R.success();
     }
@@ -76,7 +73,6 @@ public class ShoppingCartController {
      */
     @GetMapping("/getShoppingCartItem")
     public R getShoppingCartItem(Long[] cartItemIds, @UserToken MallUser mallUser) {
-        log.info("getShoppingCartItem-->用户:{}", JSONUtil.toJsonStr(mallUser));
         List<ShoppingCartContentVo> cartContentVos = shoppingCartService.getShoppingCartItem(Arrays.asList(cartItemIds), mallUser.getId());
         return R.successData(cartContentVos);
     }

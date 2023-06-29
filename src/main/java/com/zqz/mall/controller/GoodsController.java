@@ -1,6 +1,5 @@
 package com.zqz.mall.controller;
 
-import cn.hutool.json.JSONUtil;
 import com.zqz.mall.annotation.UserToken;
 import com.zqz.mall.common.bean.R;
 import com.zqz.mall.entity.MallUser;
@@ -30,7 +29,6 @@ public class GoodsController {
     @GetMapping("/detail/{goodsId}")
     public R getDetailByGoodsId(@PathVariable("goodsId") Long goodsId,
                                 @UserToken MallUser mallUser) {
-        log.info("detail-->用户:{}", JSONUtil.toJsonStr(mallUser));
         return R.successData(goodsService.getDetailByGoodsId(goodsId));
 
     }
