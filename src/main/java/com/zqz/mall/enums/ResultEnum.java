@@ -97,6 +97,8 @@ public enum ResultEnum {
 
     DATA_PARSE_FAIL("数据解析失败"),
 
+    SYS_ERR("系统异常"),
+
     DB_ERROR("database error");
 
     private String result;
