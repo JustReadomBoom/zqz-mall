@@ -66,7 +66,7 @@ public class LogAop {
             return proceed;
         } catch (Throwable e) {
             log.error("******执行异常:{}", e.getMessage(), e);
-            return R.fail(ResultEnum.SYS_ERR.getResult());
+            return R.fail(e.getMessage());
         }
     }
 }

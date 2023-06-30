@@ -8,8 +8,8 @@
     <result column="goods_category_id" property="goodsCategoryId" jdbcType="BIGINT" />
     <result column="goods_cover_img" property="goodsCoverImg" jdbcType="VARCHAR" />
     <result column="goods_carousel" property="goodsCarousel" jdbcType="VARCHAR" />
-    <result column="original_price" property="originalPrice" jdbcType="INTEGER" />
-    <result column="selling_price" property="sellingPrice" jdbcType="INTEGER" />
+    <result column="original_price" property="originalPrice" jdbcType="DECIMAL" />
+    <result column="selling_price" property="sellingPrice" jdbcType="DECIMAL" />
     <result column="stock_num" property="stockNum" jdbcType="INTEGER" />
     <result column="tag" property="tag" jdbcType="VARCHAR" />
     <result column="goods_sell_status" property="goodsSellStatus" jdbcType="TINYINT" />
@@ -50,7 +50,7 @@
       goods_detail_content)
     values (#{id,jdbcType=BIGINT}, #{goodsName,jdbcType=VARCHAR}, #{goodsIntro,jdbcType=VARCHAR},
       #{goodsCategoryId,jdbcType=BIGINT}, #{goodsCoverImg,jdbcType=VARCHAR}, #{goodsCarousel,jdbcType=VARCHAR},
-      #{originalPrice,jdbcType=INTEGER}, #{sellingPrice,jdbcType=INTEGER}, #{stockNum,jdbcType=INTEGER},
+      #{originalPrice,jdbcType=DECIMAL}, #{sellingPrice,jdbcType=DECIMAL}, #{stockNum,jdbcType=INTEGER},
       #{tag,jdbcType=VARCHAR}, #{goodsSellStatus,jdbcType=TINYINT}, #{createUser,jdbcType=INTEGER},
       #{createTime,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP},
       #{goodsDetailContent,jdbcType=LONGVARCHAR})
@@ -127,10 +127,10 @@
         #{goodsCarousel,jdbcType=VARCHAR},
       </if>
       <if test="originalPrice != null" >
-        #{originalPrice,jdbcType=INTEGER},
+        #{originalPrice,jdbcType=DECIMAL},
       </if>
       <if test="sellingPrice != null" >
-        #{sellingPrice,jdbcType=INTEGER},
+        #{sellingPrice,jdbcType=DECIMAL},
       </if>
       <if test="stockNum != null" >
         #{stockNum,jdbcType=INTEGER},
@@ -177,10 +177,10 @@
         goods_carousel = #{goodsCarousel,jdbcType=VARCHAR},
       </if>
       <if test="originalPrice != null" >
-        original_price = #{originalPrice,jdbcType=INTEGER},
+        original_price = #{originalPrice,jdbcType=DECIMAL},
       </if>
       <if test="sellingPrice != null" >
-        selling_price = #{sellingPrice,jdbcType=INTEGER},
+        selling_price = #{sellingPrice,jdbcType=DECIMAL},
       </if>
       <if test="stockNum != null" >
         stock_num = #{stockNum,jdbcType=INTEGER},
@@ -216,8 +216,8 @@
       goods_category_id = #{goodsCategoryId,jdbcType=BIGINT},
       goods_cover_img = #{goodsCoverImg,jdbcType=VARCHAR},
       goods_carousel = #{goodsCarousel,jdbcType=VARCHAR},
-      original_price = #{originalPrice,jdbcType=INTEGER},
-      selling_price = #{sellingPrice,jdbcType=INTEGER},
+      original_price = #{originalPrice,jdbcType=DECIMAL},
+      selling_price = #{sellingPrice,jdbcType=DECIMAL},
       stock_num = #{stockNum,jdbcType=INTEGER},
       tag = #{tag,jdbcType=VARCHAR},
       goods_sell_status = #{goodsSellStatus,jdbcType=TINYINT},
@@ -235,8 +235,8 @@
       goods_category_id = #{goodsCategoryId,jdbcType=BIGINT},
       goods_cover_img = #{goodsCoverImg,jdbcType=VARCHAR},
       goods_carousel = #{goodsCarousel,jdbcType=VARCHAR},
-      original_price = #{originalPrice,jdbcType=INTEGER},
-      selling_price = #{sellingPrice,jdbcType=INTEGER},
+      original_price = #{originalPrice,jdbcType=DECIMAL},
+      selling_price = #{sellingPrice,jdbcType=DECIMAL},
       stock_num = #{stockNum,jdbcType=INTEGER},
       tag = #{tag,jdbcType=VARCHAR},
       goods_sell_status = #{goodsSellStatus,jdbcType=TINYINT},
@@ -262,5 +262,16 @@
     </foreach>
     );
   </select>
+
+
+  <update id="updateStockNum">
+    <foreach collection="stockNumVos" item="stockNumVo" separator=";">
+      update goods_info
+      set stock_num = stock_num - #{stockNumVo.goodsCount}
+      where id = #{stockNumVo.goodsId}
+      and stock_num >= #{stockNumVo.goodsCount}
+      and goods_sell_status = 0
+    </foreach>
+  </update>
 
 </mapper>

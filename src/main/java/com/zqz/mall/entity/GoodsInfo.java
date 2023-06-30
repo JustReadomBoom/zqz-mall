@@ -1,6 +1,7 @@
 package com.zqz.mall.entity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class GoodsInfo implements Serializable {
@@ -18,9 +19,9 @@ public class GoodsInfo implements Serializable {
 
     private String goodsCarousel;
 
-    private Integer originalPrice;
+    private BigDecimal originalPrice;
 
-    private Integer sellingPrice;
+    private BigDecimal sellingPrice;
 
     private Integer stockNum;
 
@@ -88,19 +89,19 @@ public class GoodsInfo implements Serializable {
         this.goodsCarousel = goodsCarousel == null ? null : goodsCarousel.trim();
     }
 
-    public Integer getOriginalPrice() {
+    public BigDecimal getOriginalPrice() {
         return originalPrice;
     }
 
-    public void setOriginalPrice(Integer originalPrice) {
+    public void setOriginalPrice(BigDecimal originalPrice) {
         this.originalPrice = originalPrice;
     }
 
-    public Integer getSellingPrice() {
+    public BigDecimal getSellingPrice() {
         return sellingPrice;
     }
 
-    public void setSellingPrice(Integer sellingPrice) {
+    public void setSellingPrice(BigDecimal sellingPrice) {
         this.sellingPrice = sellingPrice;
     }
 

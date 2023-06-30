@@ -1,16 +1,15 @@
 package com.zqz.mall.controller;
 
 import com.zqz.mall.annotation.UserToken;
-import com.zqz.mall.common.bean.AddShoppingCartReq;
-import com.zqz.mall.common.bean.PageResult;
-import com.zqz.mall.common.bean.R;
-import com.zqz.mall.common.bean.ShoppingCartContentVo;
+import com.zqz.mall.common.bean.*;
 import com.zqz.mall.entity.MallUser;
+import com.zqz.mall.enums.ResultEnum;
 import com.zqz.mall.service.ShoppingCartService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Arrays;
 import java.util.List;
 
@@ -67,6 +66,7 @@ public class ShoppingCartController {
 
     /**
      * 获取购物车详情信息
+     *
      * @param cartItemIds
      * @param mallUser
      * @return
@@ -75,6 +75,22 @@ public class ShoppingCartController {
     public R getShoppingCartItem(Long[] cartItemIds, @UserToken MallUser mallUser) {
         List<ShoppingCartContentVo> cartContentVos = shoppingCartService.getShoppingCartItem(Arrays.asList(cartItemIds), mallUser.getId());
         return R.successData(cartContentVos);
+    }
+
+
+    /**
+     * 更新购物车商品数量
+     * @param req
+     * @param mallUser
+     * @return
+     */
+    @PostMapping("/updateCartItemNum")
+    public R updateCartItemNum(@RequestBody @Valid UpdateCartItemReq req, @UserToken MallUser mallUser) {
+        boolean u = shoppingCartService.updateCartItemNum(req, mallUser.getId());
+        if (u) {
+            return R.success();
+        }
+        return R.fail(ResultEnum.OPERATE_ERROR.getResult());
     }
 
 }

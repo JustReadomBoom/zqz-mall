@@ -5,10 +5,7 @@ import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.zqz.mall.common.bean.AddShoppingCartReq;
-import com.zqz.mall.common.bean.GetShoppingCartListResp;
-import com.zqz.mall.common.bean.PageResult;
-import com.zqz.mall.common.bean.ShoppingCartContentVo;
+import com.zqz.mall.common.bean.*;
 import com.zqz.mall.dao.GoodsInfoMapper;
 import com.zqz.mall.dao.ShoppingCartItemMapper;
 import com.zqz.mall.entity.GoodsInfo;
@@ -63,7 +60,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         }
         Long goodsId = req.getGoodsId();
         ShoppingCartItem cartItem = cartItemMapper.selectByUserIdAndGoodsId(userId, goodsId);
-        if (ObjectUtil.isEmpty(cartItem)) {
+        if (ObjectUtil.isNotEmpty(cartItem)) {
             throw new MallException(ResultEnum.SHOPPING_CART_ITEM_EXIST_ERROR.getResult());
         }
         GoodsInfo goodsInfo = goodsInfoMapper.selectByPrimaryKey(goodsId);
@@ -145,5 +142,31 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
             return listResp;
         }
         return null;
+    }
+
+
+    @Override
+    public boolean updateCartItemNum(UpdateCartItemReq req, Long userId) {
+        Long cartItemId = req.getCartItemId();
+        ShoppingCartItem cartItem = cartItemMapper.selectByPrimaryKey(cartItemId);
+        if (ObjectUtil.isEmpty(cartItem)) {
+            throw new MallException(ResultEnum.DATA_NOT_EXIST.getResult());
+        }
+        if (!cartItem.getUserId().equals(userId)) {
+            throw new MallException(ResultEnum.REQUEST_FORBIDEN_ERROR.getResult());
+        }
+        if (req.getGoodsCount() > 5) {
+            throw new MallException(ResultEnum.SHOPPING_CART_ITEM_LIMIT_NUMBER_ERROR.getResult());
+        }
+        if (req.getGoodsCount().equals(cartItem.getGoodsCount())) {
+            return true;
+        }
+        cartItem.setGoodsCount(req.getGoodsCount());
+        cartItem.setUpdateTime(new Date());
+        int i = cartItemMapper.updateByPrimaryKeySelective(cartItem);
+        if (i > 0) {
+            return true;
+        }
+        return false;
     }
 }

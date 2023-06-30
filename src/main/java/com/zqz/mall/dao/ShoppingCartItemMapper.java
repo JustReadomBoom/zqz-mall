@@ -1,5 +1,6 @@
 package com.zqz.mall.dao;
 
+import com.zqz.mall.common.bean.ShoppingCartContentVo;
 import com.zqz.mall.entity.ShoppingCartItem;
 import org.apache.ibatis.annotations.Param;
 
@@ -29,4 +30,7 @@ public interface ShoppingCartItemMapper {
     int selectCountByUserId(@Param("userId") Long userId);
 
     List<ShoppingCartItem> selectByUserIdAndCartItemIds(@Param("userId") Long userId, @Param("itemIds") List<Long> itemIds);
+
+    int deleteBatch(List<Long> ids);
+
 }

@@ -1,6 +1,7 @@
 package com.zqz.mall.entity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class Order implements Serializable {
@@ -10,7 +11,7 @@ public class Order implements Serializable {
 
     private Long userId;
 
-    private Integer totalPrice;
+    private BigDecimal totalPrice;
 
     private Byte payStatus;
 
@@ -54,13 +55,6 @@ public class Order implements Serializable {
         this.userId = userId;
     }
 
-    public Integer getTotalPrice() {
-        return totalPrice;
-    }
-
-    public void setTotalPrice(Integer totalPrice) {
-        this.totalPrice = totalPrice;
-    }
 
     public Byte getPayStatus() {
         return payStatus;
@@ -124,6 +118,14 @@ public class Order implements Serializable {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public BigDecimal getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(BigDecimal totalPrice) {
+        this.totalPrice = totalPrice;
     }
 
     @Override

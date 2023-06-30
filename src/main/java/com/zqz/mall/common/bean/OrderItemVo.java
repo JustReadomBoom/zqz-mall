@@ -7,18 +7,13 @@ import java.math.BigDecimal;
 
 /**
  * @Author: ZQZ
- * @Description: 购物车内容
- * @ClassName: ShoppingCartContentVo
- * @Date: Created in 10:19 2023-6-26
+ * @Description: 订单项内容
+ * @ClassName: OrderItemVo
+ * @Date: Created in 9:25 2023-6-30
  */
 @Data
-public class ShoppingCartContentVo implements Serializable {
-    private static final long serialVersionUID = 8881578554964171378L;
-
-    /**
-     * 购物项id
-     */
-    private Long cartItemId;
+public class OrderItemVo implements Serializable {
+    private static final long serialVersionUID = -4701653612824314625L;
 
     /**
      * 商品id

@@ -158,5 +158,13 @@
     and user_id = #{userId,jdbcType=BIGINT} and is_deleted = 0
   </select>
 
+  <update id="deleteBatch">
+    update shopping_cart_item
+    set is_deleted=1 where id in
+    <foreach item="id" collection="list" open="(" separator="," close=")">
+      #{id}
+    </foreach>
+  </update>
+
 
 </mapper>

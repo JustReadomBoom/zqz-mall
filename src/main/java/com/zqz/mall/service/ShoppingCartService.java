@@ -1,9 +1,6 @@
 package com.zqz.mall.service;
 
-import com.zqz.mall.common.bean.AddShoppingCartReq;
-import com.zqz.mall.common.bean.GetShoppingCartListResp;
-import com.zqz.mall.common.bean.PageResult;
-import com.zqz.mall.common.bean.ShoppingCartContentVo;
+import com.zqz.mall.common.bean.*;
 
 import java.util.List;
 
@@ -22,4 +19,6 @@ public interface ShoppingCartService {
     PageResult<ShoppingCartContentVo> getListPage(Integer pageNumber, Long userId);
 
     List<ShoppingCartContentVo> getShoppingCartItem(List<Long> itemIds, Long userId);
+
+    boolean updateCartItemNum(UpdateCartItemReq req, Long userId);
 }

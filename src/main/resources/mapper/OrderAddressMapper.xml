@@ -3,6 +3,7 @@
 <mapper namespace="com.zqz.mall.dao.OrderAddressMapper" >
   <resultMap id="BaseResultMap" type="com.zqz.mall.entity.OrderAddress" >
     <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="order_id" property="orderId" jdbcType="BIGINT" />
     <result column="user_name" property="userName" jdbcType="VARCHAR" />
     <result column="user_phone" property="userPhone" jdbcType="VARCHAR" />
     <result column="province_name" property="provinceName" jdbcType="VARCHAR" />
@@ -11,10 +12,10 @@
     <result column="detail_address" property="detailAddress" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, user_name, user_phone, province_name, city_name, region_name, detail_address
+    id, order_id, user_name, user_phone, province_name, city_name, region_name, detail_address
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select 
+    select
     <include refid="Base_Column_List" />
     from order_address
     where id = #{id,jdbcType=BIGINT}
@@ -24,11 +25,11 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.zqz.mall.entity.OrderAddress" >
-    insert into order_address (id, user_name, user_phone, 
-      province_name, city_name, region_name, 
+    insert into order_address (id, user_name, user_phone,
+      province_name, city_name, region_name,
       detail_address)
-    values (#{id,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR}, #{userPhone,jdbcType=VARCHAR}, 
-      #{provinceName,jdbcType=VARCHAR}, #{cityName,jdbcType=VARCHAR}, #{regionName,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR}, #{userPhone,jdbcType=VARCHAR},
+      #{provinceName,jdbcType=VARCHAR}, #{cityName,jdbcType=VARCHAR}, #{regionName,jdbcType=VARCHAR},
       #{detailAddress,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.zqz.mall.entity.OrderAddress" >
@@ -36,6 +37,9 @@
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
+      </if>
+      <if test="orderId != null">
+        order_id,
       </if>
       <if test="userName != null" >
         user_name,
@@ -59,6 +63,9 @@
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         #{id,jdbcType=BIGINT},
+      </if>
+      <if test="orderId != null">
+        #{orderId,jdbcType=BIGINT},
       </if>
       <if test="userName != null" >
         #{userName,jdbcType=VARCHAR},

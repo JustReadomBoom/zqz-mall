@@ -7,16 +7,16 @@
     <result column="goods_id" property="goodsId" jdbcType="BIGINT" />
     <result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
     <result column="goods_cover_img" property="goodsCoverImg" jdbcType="VARCHAR" />
-    <result column="selling_price" property="sellingPrice" jdbcType="INTEGER" />
+    <result column="selling_price" property="sellingPrice" jdbcType="DECIMAL" />
     <result column="goods_count" property="goodsCount" jdbcType="INTEGER" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, order_id, goods_id, goods_name, goods_cover_img, selling_price, goods_count, 
+    id, order_id, goods_id, goods_name, goods_cover_img, selling_price, goods_count,
     create_time
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select 
+    select
     <include refid="Base_Column_List" />
     from order_item
     where id = #{id,jdbcType=BIGINT}
@@ -26,11 +26,11 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.zqz.mall.entity.OrderItem" >
-    insert into order_item (id, order_id, goods_id, 
-      goods_name, goods_cover_img, selling_price, 
+    insert into order_item (id, order_id, goods_id,
+      goods_name, goods_cover_img, selling_price,
       goods_count, create_time)
-    values (#{id,jdbcType=BIGINT}, #{orderId,jdbcType=BIGINT}, #{goodsId,jdbcType=BIGINT}, 
-      #{goodsName,jdbcType=VARCHAR}, #{goodsCoverImg,jdbcType=VARCHAR}, #{sellingPrice,jdbcType=INTEGER}, 
+    values (#{id,jdbcType=BIGINT}, #{orderId,jdbcType=BIGINT}, #{goodsId,jdbcType=BIGINT},
+      #{goodsName,jdbcType=VARCHAR}, #{goodsCoverImg,jdbcType=VARCHAR}, #{sellingPrice,jdbcType=DECIMAL},
       #{goodsCount,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.zqz.mall.entity.OrderItem" >
@@ -78,7 +78,7 @@
         #{goodsCoverImg,jdbcType=VARCHAR},
       </if>
       <if test="sellingPrice != null" >
-        #{sellingPrice,jdbcType=INTEGER},
+        #{sellingPrice,jdbcType=DECIMAL},
       </if>
       <if test="goodsCount != null" >
         #{goodsCount,jdbcType=INTEGER},
@@ -104,7 +104,7 @@
         goods_cover_img = #{goodsCoverImg,jdbcType=VARCHAR},
       </if>
       <if test="sellingPrice != null" >
-        selling_price = #{sellingPrice,jdbcType=INTEGER},
+        selling_price = #{sellingPrice,jdbcType=DECIMAL},
       </if>
       <if test="goodsCount != null" >
         goods_count = #{goodsCount,jdbcType=INTEGER},
@@ -121,9 +121,33 @@
       goods_id = #{goodsId,jdbcType=BIGINT},
       goods_name = #{goodsName,jdbcType=VARCHAR},
       goods_cover_img = #{goodsCoverImg,jdbcType=VARCHAR},
-      selling_price = #{sellingPrice,jdbcType=INTEGER},
+      selling_price = #{sellingPrice,jdbcType=DECIMAL},
       goods_count = #{goodsCount,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+  <select id="selectByOrderIds" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from order_item
+    where order_id
+    in
+    <foreach item="id" collection="orderIds" open="(" separator="," close=")">
+      #{id}
+    </foreach>
+  </select>
+
+  <insert id="insertBatch" parameterType="com.zqz.mall.entity.OrderItem">
+    insert into order_item (order_id, goods_id,
+    goods_name, goods_cover_img, selling_price,
+    goods_count)
+    values
+    <foreach collection="orderItems" item="orderItem" separator=",">
+      (#{orderItem.orderId,jdbcType=BIGINT}, #{orderItem.goodsId,jdbcType=BIGINT},
+      #{orderItem.goodsName,jdbcType=VARCHAR}, #{orderItem.goodsCoverImg,jdbcType=VARCHAR},
+      #{orderItem.sellingPrice,jdbcType=DECIMAL},
+      #{orderItem.goodsCount,jdbcType=INTEGER})
+    </foreach>
+  </insert>
 </mapper>

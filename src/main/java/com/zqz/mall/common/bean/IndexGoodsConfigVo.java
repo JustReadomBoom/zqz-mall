@@ -3,6 +3,7 @@ package com.zqz.mall.common.bean;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 /**
  * @Author: ZQZ
@@ -37,7 +38,7 @@ public class IndexGoodsConfigVo implements Serializable {
     /**
      * 商品价格
      */
-    private Integer sellingPrice;
+    private BigDecimal sellingPrice;
 
     /**
      * 商品标签

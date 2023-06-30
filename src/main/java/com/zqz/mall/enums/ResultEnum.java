@@ -21,6 +21,8 @@ public enum ResultEnum {
 
     PARAM_ERROR("参数错误！"),
 
+    SAVE_ORDER_FAIL("新增订单失败"),
+
     SAME_CATEGORY_EXIST("已存在同级同名的分类！"),
 
     SAME_LOGIN_NAME_EXIST("用户名已存在！"),
@@ -44,6 +46,8 @@ public enum ResultEnum {
     GOODS_NOT_EXIST("商品不存在！"),
 
     GOODS_PUT_DOWN("商品已下架！"),
+
+    SOME_GOODS_PUT_DOWN("%s商品已下架！"),
 
     SHOPPING_CART_ITEM_LIMIT_NUMBER_ERROR("超出单个商品的最大购买数量！"),
 
@@ -91,6 +95,8 @@ public enum ResultEnum {
 
     OPERATE_ERROR("操作失败！"),
 
+    DELETE_CART_ITEM_FAIL("删除购物项失败"),
+
     REQUEST_FORBIDEN_ERROR("禁止该操作！"),
 
     NO_PERMISSION_ERROR("无权限！"),
@@ -98,6 +104,8 @@ public enum ResultEnum {
     DATA_PARSE_FAIL("数据解析失败"),
 
     SYS_ERR("系统异常"),
+
+    ADDRESS_NO_EXIST("地址不存在"),
 
     DB_ERROR("database error");
 
