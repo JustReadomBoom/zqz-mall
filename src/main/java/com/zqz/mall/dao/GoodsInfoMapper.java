@@ -1,5 +1,6 @@
 package com.zqz.mall.dao;
 
+import com.zqz.mall.common.bean.SearchGoodsListParam;
 import com.zqz.mall.common.bean.StockNumVo;
 import com.zqz.mall.entity.GoodsInfo;
 import org.apache.ibatis.annotations.Param;
@@ -24,4 +25,6 @@ public interface GoodsInfoMapper {
     List<GoodsInfo> selectByGoodIds(List<Long> goodIds);
 
     int updateStockNum(@Param("stockNumVos") List<StockNumVo> stockNumVos);
+
+    List<GoodsInfo> searchGoodsList(SearchGoodsListParam param);
 }

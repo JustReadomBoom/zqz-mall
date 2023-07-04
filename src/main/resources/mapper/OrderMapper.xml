@@ -210,4 +210,11 @@
         from `order`
         where order_no = #{orderNo}
     </select>
+
+    <select id="selectByOrderNo" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from `order`
+        where order_no = #{orderNo,jdbcType=VARCHAR} and is_deleted = 0 limit 1
+    </select>
 </mapper>

@@ -22,4 +22,5 @@ public interface OrderItemMapper {
 
     int insertBatch(List<OrderItem> orderItems);
 
+    List<OrderItem> selectByOrderId(Long orderId);
 }

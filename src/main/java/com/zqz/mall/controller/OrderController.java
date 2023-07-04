@@ -61,4 +61,17 @@ public class OrderController {
     }
 
 
+    /**
+     * 获取订单详情
+     *
+     * @param orderNo
+     * @param mallUser
+     * @return
+     */
+    @GetMapping("/getOrderDetail/{orderNo}")
+    public R getOrderDetail(@PathVariable("orderNo") String orderNo, @UserToken MallUser mallUser) {
+        return R.successData(orderService.getOrderDetail(orderNo, mallUser.getId()));
+    }
+
+
 }

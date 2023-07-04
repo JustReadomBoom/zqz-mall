@@ -13,6 +13,7 @@ import com.zqz.mall.constants.Constants;
 import com.zqz.mall.dao.*;
 import com.zqz.mall.entity.*;
 import com.zqz.mall.enums.OrderStatusEnum;
+import com.zqz.mall.enums.PayTypeEnum;
 import com.zqz.mall.enums.ResultEnum;
 import com.zqz.mall.exception.MallException;
 import com.zqz.mall.service.OrderService;
@@ -217,5 +218,28 @@ public class OrderServiceImpl implements OrderService {
             throw new MallException(ResultEnum.OPERATE_ERROR.getResult());
         }
         return null;
+    }
+
+    @Override
+    public GetOrderDetailResp getOrderDetail(String orderNo, Long userId) {
+        GetOrderDetailResp resp = new GetOrderDetailResp();
+        Order order = orderMapper.selectByOrderNo(orderNo);
+        if (ObjectUtil.isEmpty(order)) {
+            throw new MallException(ResultEnum.DATA_NOT_EXIST.getResult());
+        }
+        if (!userId.equals(order.getUserId())) {
+            throw new MallException(ResultEnum.REQUEST_FORBIDEN_ERROR.getResult());
+        }
+        List<OrderItem> orderItems = orderItemMapper.selectByOrderId(order.getId());
+        if (CollectionUtil.isEmpty(orderItems)) {
+            throw new MallException(ResultEnum.ORDER_ITEM_NOT_EXIST_ERROR.getResult());
+        }
+
+        List<OrderItemVo> itemVoList = BeanUtil.copyToList(orderItems, OrderItemVo.class);
+        BeanUtil.copyProperties(order, resp);
+        resp.setOrderStatusString(OrderStatusEnum.getByStatus(order.getOrderStatus()).getName());
+        resp.setPayTypeString(PayTypeEnum.getPayByType(order.getPayType()).getName());
+        resp.setNewBeeMallOrderItemVOS(itemVoList);
+        return resp;
     }
 }

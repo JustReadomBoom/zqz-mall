@@ -22,4 +22,6 @@ public interface OrderMapper {
     List<Order> getListPage(OrderListPageParam param);
 
     Long selectIdByOrderNo(@Param("orderNo") String orderNo);
+
+    Order selectByOrderNo(String orderNo);
 }

@@ -150,4 +150,11 @@
       #{orderItem.goodsCount,jdbcType=INTEGER})
     </foreach>
   </insert>
+
+  <select id="selectByOrderId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from order_item
+    where order_id = #{orderId, jdbcType=BIGINT}
+  </select>
 </mapper>
